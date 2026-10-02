@@ -57,7 +57,301 @@ $(function(){
   
 <h4>Distribution en Cloche</h4>
   <iframe src="https://www.desmos.com/calculator/s72dnf5oz4?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder=0></iframe>
-  
+ 
+  <h5>Graphe interactif</h5>
+  <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Explorateur d'Histogrammes & Statistiques</title>
+  <!-- Inclusion de la bibliothèque Chart.js pour afficher l'histogramme -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 20px;
+      color: #333;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 25px;
+    }
+    .control-panel {
+      background: #f4f6f8;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-top: 5px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .slider-container {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .slider-container input {
+      flex: 1;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #004999;
+    }
+    .stats-card {
+      background: #eef5fc;
+      border-left: 5px solid #0066cc;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .stat-item {
+      background: white;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .stat-value {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #0066cc;
+    }
+    .conclusion {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Explorateur de Données Interactif</h1>
+  <div class="subtitle">Analyse visuelle de distributions et calculatrice de statistiques en temps réel</div>
+
+  <div class="control-panel">
+    <label for="data-input">Entrez vos données (séparées par des virgules) :</label>
+    <textarea id="data-input">12, 15, 18, 22, 25, 25, 27, 30, 31, 32, 33, 35, 36, 37, 40, 42, 45, 50</textarea>
+
+    <div class="slider-container">
+      <label for="bin-width">Largeur des intervalles : <span id="bin-width-val">5</span></label>
+      <input type="range" id="bin-width" min="1" max="20" value="5">
+    </div>
+
+    <div><strong>Générateur de distributions :</strong></div>
+    <div class="btn-group">
+      <button onclick="generateData('normale')">Normale</button>
+      <button onclick="generateData('asymetrique')">Asymétrique</button>
+      <button onclick="generateData('bimodale')">Bimodale</button>
+      <button onclick="generateData('uniforme')">Uniforme</button>
+    </div>
+  </div>
+
+  <canvas id="histogramChart" width="800" height="400"></canvas>
+
+  <div class="stats-card">
+    <h3>Calculatrice de Statistiques</h3>
+    <div class="stats-grid">
+      <div class="stat-item">Moyenne : <div class="stat-value" id="stat-mean">-</div></div>
+      <div class="stat-item">Médiane : <div class="stat-value" id="stat-median">-</div></div>
+      <div class="stat-item">Min : <div class="stat-value" id="stat-min">-</div></div>
+      <div class="stat-item">Max : <div class="stat-value" id="stat-max">-</div></div>
+      <div class="stat-item">Écart-type : <div class="stat-value" id="stat-std">-</div></div>
+    </div>
+    <p id="symmetry-analysis" style="margin-top: 15px; font-weight: bold;"></p>
+  </div>
+
+  <div class="conclusion">
+    Mon application permet de visualiser instantanément la forme d'un ensemble de données sous forme d'histogramme, d'ajuster la largeur des classes, de générer différents types de distributions statistiques et d'en calculer automatiquement les indicateurs principaux (moyenne, médiane, écart-type, etc.).
+  </div>
+
+  <script>
+    let chartInstance = null;
+
+    function getRawData() {
+      const input = document.getElementById('data-input').value;
+      return input.split(',')
+                  .map(val => parseFloat(val.trim()))
+                  .filter(val => !isNaN(val));
+    }
+
+    function calculateStats(data) {
+      if (data.length === 0) return;
+
+      const sorted = [...data].sort((a, b) => a - b);
+      const min = sorted[0];
+      const max = sorted[sorted.length - 1];
+      const sum = data.reduce((a, b) => a + b, 0);
+      const mean = sum / data.length;
+
+      let median;
+      const mid = Math.floor(sorted.length / 2);
+      if (sorted.length % 2 === 0) {
+        median = (sorted[mid - 1] + sorted[mid]) / 2;
+      } else {
+        median = sorted[mid];
+      }
+
+      const variance = data.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / data.length;
+      const stdDev = Math.sqrt(variance);
+
+      document.getElementById('stat-mean').textContent = mean.toFixed(2);
+      document.getElementById('stat-median').textContent = median.toFixed(2);
+      document.getElementById('stat-min').textContent = min;
+      document.getElementById('stat-max').textContent = max;
+      document.getElementById('stat-std').textContent = stdDev.toFixed(2);
+
+      const diff = Math.abs(mean - median);
+      const analysisEl = document.getElementById('symmetry-analysis');
+      if (diff < (stdDev * 0.15)) {
+        analysisEl.textContent = "Analyse : La distribution semble plutôt symétrique (la moyenne et la médiane sont très proches).";
+        analysisEl.style.color = "green";
+      } else if (mean > median) {
+        analysisEl.textContent = "Analyse : La distribution est asymétrique à droite (étalée vers les valeurs élevées, car moyenne > médiane).";
+        analysisEl.style.color = "darkorange";
+      } else {
+        analysisEl.textContent = "Analyse : La distribution est asymétrique à gauche (étalée vers les valeurs faibles, car moyenne < médiane).";
+        analysisEl.style.color = "darkorange";
+      }
+    }
+
+    function updateChart() {
+      const data = getRawData();
+      const binWidth = parseFloat(document.getElementById('bin-width').value);
+      document.getElementById('bin-width-val').textContent = binWidth;
+
+      if (data.length === 0) return;
+
+      calculateStats(data);
+
+      const min = Math.floor(Math.min(...data));
+      const max = Math.max(...data);
+
+      const bins = [];
+      const labels = [];
+      
+      for (let start = min; start <= max + binWidth; start += binWidth) {
+        const end = start + binWidth;
+        const count = data.filter(v => v >= start && v < end).length;
+        labels.push(`[${start.toFixed(1)}, ${end.toFixed(1)}[` );
+        bins.push(count);
+      }
+
+      const ctx = document.getElementById('histogramChart').getContext('2d');
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Fréquence',
+            data: bins,
+            backgroundColor: 'rgba(0, 102, 204, 0.6)',
+            borderColor: 'rgba(0, 102, 204, 1)',
+            borderWidth: 1,
+            categoryPercentage: 1.0,
+            barPercentage: 1.0
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { title: { display: true, text: 'Intervalles' } },
+            y: { title: { display: true, text: 'Effectif' }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    function generateData(type) {
+      let generated = [];
+      const n = 100;
+
+      if (type === 'normale') {
+        for (let i = 0; i < n; i++) {
+          let u = 0, v = 0;
+          while(u === 0) u = Math.random();
+          while(v === 0) v = Math.random();
+          let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+          generated.push(Math.round(num * 10 + 50));
+        }
+      } else if (type === 'asymetrique') {
+        for (let i = 0; i < n; i++) {
+          generated.push(Math.round(Math.pow(Math.random(), 3) * 80 + 10));
+        }
+      } else if (type === 'bimodale') {
+        for (let i = 0; i < n; i++) {
+          if (Math.random() < 0.5) {
+            generated.push(Math.round(Math.random() * 20 + 10));
+          } else {
+            generated.push(Math.round(Math.random() * 20 + 70));
+          }
+        }
+      } else if (type === 'uniforme') {
+        for (let i = 0; i < n; i++) {
+          generated.push(Math.round(Math.random() * 80 + 10));
+        }
+      }
+
+      document.getElementById('data-input').value = generated.join(', ');
+      updateChart();
+    }
+
+    document.getElementById('data-input').addEventListener('input', updateChart);
+    document.getElementById('bin-width').addEventListener('input', updateChart);
+
+    // Initialisation au chargement de la page
+    updateChart();
+  </script>
+
+</body>
+</html>
 
 <!-- Tu peux complètement modifier le contenu par dessus cette ligne -->
 
