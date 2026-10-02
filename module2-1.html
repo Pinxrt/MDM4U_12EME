@@ -68,12 +68,16 @@ $(function(){
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom scrollbar and widget isolation wrapper */
-   .histogram-widget-container {
+ .histogram-widget-container {
   font-family: system-ui, -apple-system, sans-serif;
   width: 100%;
-  margin: 0;
+  margin-top: 40px; /* Adjust this pixel number to push it lower */
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
   padding: 20px 0;
-    }
+  /* ... */
+}
     .histogram-widget-container *, .histogram-widget-container *::before, .histogram-widget-container *::after {
       box-sizing: inherit;
     }
