@@ -58,7 +58,7 @@ $(function(){
 <h4>Distribution en Cloche</h4>
   <iframe src="https://www.desmos.com/calculator/s72dnf5oz4?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder=0></iframe>
  
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -68,16 +68,15 @@ $(function(){
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom scrollbar and widget isolation wrapper */
- .histogram-widget-container {
-  font-family: system-ui, -apple-system, sans-serif;
-  width: 100%;
-  margin-top: 40px; /* Adjust this pixel number to push it lower */
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  padding: 20px 0;
-  /* ... */
-}
+    .histogram-widget-container {
+      font-family: system-ui, -apple-system, sans-serif;
+      width: 100%;
+      margin-top: 40px;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 20px 0;
+    }
     .histogram-widget-container *, .histogram-widget-container *::before, .histogram-widget-container *::after {
       box-sizing: inherit;
     }
@@ -167,7 +166,7 @@ $(function(){
         Calculatrice de Statistiques
       </h3>
       
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
+      <div class="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-4">
         <div class="bg-white p-3 rounded-lg border border-indigo-100 text-center shadow-sm">
           <span class="block text-xs font-medium text-slate-500 uppercase">Moyenne</span>
           <span id="stat-mean" class="text-lg font-bold text-indigo-600">-</span>
@@ -175,6 +174,10 @@ $(function(){
         <div class="bg-white p-3 rounded-lg border border-indigo-100 text-center shadow-sm">
           <span class="block text-xs font-medium text-slate-500 uppercase">Médiane</span>
           <span id="stat-median" class="text-lg font-bold text-indigo-600">-</span>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-indigo-100 text-center shadow-sm">
+          <span class="block text-xs font-medium text-slate-500 uppercase">Mode</span>
+          <span id="stat-mode" class="text-lg font-bold text-indigo-600">-</span>
         </div>
         <div class="bg-white p-3 rounded-lg border border-indigo-100 text-center shadow-sm">
           <span class="block text-xs font-medium text-slate-500 uppercase">Minimum</span>
@@ -197,7 +200,6 @@ $(function(){
       </div>
     </div>
 
-
   </div>
 
   <script>
@@ -209,6 +211,30 @@ $(function(){
       return input.split(/[\s,]+/)
                   .map(val => parseFloat(val))
                   .filter(val => !isNaN(val));
+    }
+
+    // Compute Mode
+    function calculateMode(data) {
+      if (data.length === 0) return "-";
+
+      const frequencyMap = {};
+      let maxFreq = 0;
+
+      data.forEach(val => {
+        frequencyMap[val] = (frequencyMap[val] || 0) + 1;
+        if (frequencyMap[val] > maxFreq) {
+          maxFreq = frequencyMap[val];
+        }
+      });
+
+      // If all elements appear with frequency 1, there is no mode
+      if (maxFreq === 1) return "Aucun";
+
+      const modes = Object.keys(frequencyMap)
+        .filter(key => frequencyMap[key] === maxFreq)
+        .map(Number);
+
+      return modes.length > 2 ? "Multiples" : modes.join(", ");
     }
 
     // Compute key statistics
@@ -231,11 +257,14 @@ $(function(){
         median = sorted[mid];
       }
 
+      const mode = calculateMode(data);
+
       const variance = data.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / data.length;
       const stdDev = Math.sqrt(variance);
 
       document.getElementById('stat-mean').textContent = mean.toFixed(2);
       document.getElementById('stat-median').textContent = median.toFixed(2);
+      document.getElementById('stat-mode').textContent = mode;
       document.getElementById('stat-min').textContent = min;
       document.getElementById('stat-max').textContent = max;
       document.getElementById('stat-std').textContent = stdDev.toFixed(2);
@@ -376,7 +405,6 @@ $(function(){
   </script>
 </body>
 </html>
-
 <!-- Tu peux complètement modifier le contenu par dessus cette ligne -->
 
 </div>
