@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<title>MDM4U</title>
+<title>MDM4U - Les mesures de dispersion</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body {font-family: "Roboto", sans-serif}
+body { font-family: "Roboto", sans-serif; }
 .w3-bar-block .w3-bar-item {
   padding: 16px;
   font-weight: bold;
+}
+.content-card {
+  margin-bottom: 24px;
+}
+.resource-btn {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 </style>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-<!--Navigation bar-->
-<div id="nav-placeholder">
 
-</div>
+<!-- Barre de navigation -->
+<div id="nav-placeholder"></div>
 
 <script>
 $(function(){
   $("#nav-placeholder").load("nav.html");
 });
 </script>
-<!--end of Navigation bar-->
+<!-- Fin de la barre de navigation -->
 
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
 
@@ -44,52 +51,74 @@ $(function(){
 
 <div class="w3-container" style="padding:32px">
 
-<!-- Tu peux complètement modifier le contenu ci-dessous -->
+  <!-- Introduction -->
+  <div class="w3-card w3-white w3-padding content-card">
+    <h2 class="w3-text-teal"><i class="fa fa-bar-chart"></i> Les mesures de dispersion</h2>
+    <p>Les mesures de dispersion sont utilisées en statistique pour évaluer l'étalement, la variabilité ou la diversité des valeurs d'une série donnée autour d'une valeur centrale (comme la moyenne ou la médiane).</p>
+  </div>
 
-<h1>Les mesures de dispersion</h1>
-Les mesures de dispersion sont utilisées en statistique pour évaluer l'étalement, la variabilité ou la diversité des valeurs d'une série donnée autour d'une valeur centrale (comme la moyenne ou la médiane).
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h2>Les Methodes de mesure de dispersion</h2>
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h3>L'etendue</h3>
-L'étendue est la mesure de dispersion la plus simple à calculer. Elle correspond à la différence entre la valeur maximale et la valeur minimale d'une série statistique.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h4>Les Quartiles</h4>
- Les quartiles sont les trois valeurs q1,q2,q3 qui divisent une série statistique ordonnée (du plus petit au plus grand) en quatre parties égales, contenant chacune 25 % des données.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h5>L'ecart interquartile</h5>
- L'écart interquartile est la différence entre le troisième quartile et le premier quartile.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h6>L'ecart type</h6>
-L'écart type ( est la mesure de dispersion la plus puissante et la plus utilisée en statistique. Il indique l'écart moyen entre les différentes valeurs de la série et la moyenne de cette même série.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h7>Comment calculer l'écart type?</h7>
-1. Calculer la moyenne** de la série de données.
-2. Trouver l'écart de chaque valeur par rapport à cette moyenne (en soustrayant la moyenne de chaque valeur).
-3. Mettre chaque écart au carré pour enlever les nombres négatifs.
-4. Calculer la variance en faisant la moyenne de tous ces carrés (additionne les carrés et divise par le nombre total de valeurs).
-5. Prendre la racine carrée de la variance : le résultat final est l'écart-type!
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h8>Lecon</h8>
-<a href="https://docs.google.com/presentation/d/1tXPZIZGQORBiqncTZE7DXeNAXTLYVB5rUZZRTPkWiaU/edit?usp=sharing" target="_blank">Ouvrir la présentation Google Slides</a>
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h9>exercise</h9>
-<a href="https://docs.google.com/document/d/1iijMP3yIK5ZFTPgOxhGuEC0AtNzfa1ME/edit?usp=sharing&ouid=100760274884507780868&rtpof=true&sd=true" target="_blank">Ouvrir le document Google Docs</a>
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<h10>Source</h10>
-<a href="https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/les-mesures-de-dispersion-m1373" target="_blank">Ouvrir la fiche AlloProf sur les mesures de dispersion</a>
-<!-- Tu peux complètement modifier le contenu par dessus cette ligne -->
+  <!-- Les méthodes -->
+  <div class="w3-card w3-white w3-padding content-card">
+    <h2 class="w3-text-teal"><i class="fa fa-list-ul"></i> Les méthodes de mesure de dispersion</h2>
+
+    <h3 class="w3-text-theme">1. L'étendue</h3>
+    <p>L'étendue est la mesure de dispersion la plus simple à calculer. Elle correspond à la différence entre la valeur maximale et la valeur minimale d'une série statistique.</p>
+    <hr>
+
+    <h3 class="w3-text-theme">2. Les Quartiles</h3>
+    <p>Les quartiles sont les trois valeurs ($Q_1$, $Q_2$, $Q_3$) qui divisent une série statistique ordonnée (du plus petit au plus grand) en quatre parties égales, contenant chacune 25 % des données.</p>
+    <hr>
+
+    <h3 class="w3-text-theme">3. L'écart interquartile</h3>
+    <p>L'écart interquartile est la différence entre le troisième quartile et le premier quartile ($Q_3 - Q_1$).</p>
+    <hr>
+
+    <h3 class="w3-text-theme">4. L'écart type</h3>
+    <p>L'écart type ($\sigma$) est la mesure de dispersion la plus puissante et la plus utilisée en statistique. Il indique l'écart moyen entre les différentes valeurs de la série et la moyenne de cette même série.</p>
+  </div>
+
+  <!-- Calcul de l'écart type -->
+  <div class="w3-card w3-white w3-padding content-card">
+    <h3 class="w3-text-teal"><i class="fa fa-calculator"></i> Comment calculer l'écart type ?</h3>
+    <ol class="w3-leftbar w3-border-teal w3-pale-teal w3-padding" style="list-style-position: inside; line-height: 1.8;">
+      <li><strong>Calculer la moyenne</strong> de la série de données.</li>
+      <li><strong>Trouver l'écart</strong> de chaque valeur par rapport à cette moyenne (en soustrayant la moyenne de chaque valeur).</li>
+      <li><strong>Mettre chaque écart au carré</strong> pour enlever les nombres négatifs.</li>
+      <li><strong>Calculer la variance</strong> en faisant la moyenne de tous ces carrés (additionner les carrés et diviser par le nombre total de valeurs).</li>
+      <li><strong>Prendre la racine carrée</strong> de la variance : le résultat final est l'écart type !</li>
+    </ol>
+  </div>
+
+  <!-- Ressources et liens -->
+  <div class="w3-card w3-white w3-padding content-card">
+    <h3 class="w3-text-teal"><i class="fa fa-link"></i> Ressources du cours</h3>
+    
+    <p><strong>Leçon :</strong></p>
+    <a href="https://docs.google.com/presentation/d/1tXPZIZGQORBiqncTZE7DXeNAXTLYVB5rUZZRTPkWiaU/edit?usp=sharing" target="_blank" class="w3-button w3-teal w3-round resource-btn">
+      <i class="fa fa-file-powerpoint-o"></i> Ouvrir la présentation Google Slides
+    </a>
+
+    <p><strong>Exercices :</strong></p>
+    <a href="https://docs.google.com/document/d/1iijMP3yIK5ZFTPgOxhGuEC0AtNzfa1ME/edit?usp=sharing&ouid=100760274884507780868&rtpof=true&sd=true" target="_blank" class="w3-button w3-teal w3-round resource-btn">
+      <i class="fa fa-file-text-o"></i> Ouvrir le document Google Docs
+    </a>
+
+    <p><strong>Source externe :</strong></p>
+    <a href="https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/les-mesures-de-dispersion-m1373" target="_blank" class="w3-button w3-blue-gray w3-round resource-btn">
+      <i class="fa fa-external-link"></i> Ouvrir la fiche AlloProf sur les mesures de dispersion
+    </a>
+  </div>
 
 </div>
 
 <footer class="w3-container w3-theme" style="padding:32px">
   <p>Contenu de cette page web par M. Gore (prénom: Pytha)</p>
 </footer>
-     
+      
 </div>
 
 <script>
-// Open and close the sidebar on medium and small screens
+// Ouvrir et fermer le menu latéral sur petits écrans
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
   document.getElementById("myOverlay").style.display = "block";
@@ -100,7 +129,7 @@ function w3_close() {
   document.getElementById("myOverlay").style.display = "none";
 }
 
-// Change style of top container on scroll
+// Changer le style du conteneur supérieur au défilement
 window.onscroll = function() {myFunction()};
 function myFunction() {
   if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -111,8 +140,7 @@ function myFunction() {
     document.getElementById("myTop").classList.remove("w3-card-4", "w3-animate-opacity");
   }
 }
-
 </script>
-     
+      
 </body>
-</html> 
+</html>
