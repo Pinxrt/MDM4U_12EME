@@ -1,235 +1,109 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mesures de Dispersion en Statistique</title>
-    <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #3b82f6;
-            --accent-color: #f3f4f6;
-            --text-color: #1f2937;
-            --card-border: #e5e7eb;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9fafb;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 5px;
-            margin-top: 1.5rem;
-        }
-
-        h3 {
-            color: var(--secondary-color);
-            margin-top: 1rem;
-        }
-
-        .section-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--card-border);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .formula-box {
-            background-color: #eff6ff;
-            border-left: 4px solid var(--secondary-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.05rem;
-        }
-
-        ol, ul {
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-
-        th, td {
-            border: 1px solid var(--card-border);
-            padding: 8px 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-        }
-    </style>
+<title>MDM4U</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Roboto", sans-serif}
+.w3-bar-block .w3-bar-item {
+  padding: 16px;
+  font-weight: bold;
+}
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
+<!--Navigation bar-->
+<div id="nav-placeholder">
 
-    <header>
-        <h1>Les Mesures de Dispersion</h1>
-        <p>Comprendre la variabilité et l'étalement des données statistiques</p>
-    </header>
+</div>
 
-    <!-- SECTION : À quoi servent les mesures de dispersion -->
-    <div class="section-card">
-        <h2>À quoi servent les mesures de dispersion ?</h2>
-        <p>
-            En statistique, les mesures de tendance centrale (comme la moyenne ou la médiane) donnent une idée de la valeur centrale d'un ensemble de données. Cependant, elles ne suffisent pas à décrire complètement une série statistique.
-        </p>
-        <p>
-            <span class="highlight">Les mesures de dispersion</span> servent à évaluer **l'étalement** ou la **variabilité** des données autour de cette valeur centrale. Elles permettent de répondre aux questions suivantes :
-        </p>
-        <ul>
-            <li>Les données sont-elles regroupées près de la moyenne ou très dispersées ?</li>
-            <li>La moyenne est-elle représentative de l'ensemble de la population ?</li>
-            <li>À quel point la série statistique est-elle homogène ou régularisée ?</li>
-        </ul>
-    </div>
+<script>
+$(function(){
+  $("#nav-placeholder").load("nav.html");
+});
+</script>
+<!--end of Navigation bar-->
 
-    <!-- SECTION : Méthodes de mesure de dispersion -->
-    <div class="section-card">
-        <h2>Les méthodes de mesure de dispersion</h2>
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
 
-        <!-- L'étendue -->
-        <h3>1. L'étendue</h3>
-        <p>
-            L'<strong>étendue</strong> est la mesure de dispersion la plus simple. Elle représente l'écart maximal entre les deux valeurs extrêmes d'une distribution.
-        </p>
-        <div class="formula-box">
-            Étendue = Valeur Maximale - Valeur Minimale
-        </div>
-        <p><em>Exemple :</em> Si les notes d'un groupe d'élèves vont de 37,3 à 75,9, l'étendue est $75,9 - 37,3 = 38,6$.</p>
+<div class="w3-main" style="margin-left:250px;">
 
-        <!-- Les Quartiles -->
-        <h3>2. Les Quartiles</h3>
-        <p>
-            Les <strong>quartiles</strong> sont les trois valeurs qui divisent une série statistique triée par ordre croissant en **quatre parties égales** (contenant chacune 25 % des données).
-        </p>
-        <ul>
-            <li><strong>Premier quartile ($Q_1$) :</strong> 25 % des données sont inférieures ou égales à cette valeur.</li>
-            <li><strong>Deuxième quartile ($Q_2$ / Médiane) :</strong> 50 % des données sont inférieures ou égales à cette valeur (sépare la série en deux).</li>
-            <li><strong>Troisième quartile ($Q_3$) :</strong> 75 % des données sont inférieures ou égales à cette valeur.</li>
-        </ul>
+<div id="myTop" class="w3-container w3-top w3-theme w3-large">
+  <p><i class="fa fa-bars w3-button w3-teal w3-hide-large w3-xlarge" onclick="w3_open()"></i>
+  <span id="myIntro" class="w3-hide">MDM4U</span></p>
+</div>
 
-        <!-- L'écart interquartile -->
-        <h3>3. L'écart interquartile</h3>
-        <p>
-            L'<strong>écart interquartile</strong> ($IQR$) correspond à la différence entre le troisième quartile ($Q_3$) et le premier quartile ($Q_1$).
-        </p>
-        <div class="formula-box">
-            Écart Interquartile (IQR) = Q₃ - Q₁
-        </div>
-        <p>
-            Il mesure la dispersion des **50 % centraux** des données. Contrairement à l'étendue, l'écart interquartile présente l'avantage d'être **insensible aux valeurs extrêmes** (valeurs aberrantes).
-        </p>
+<header class="w3-container w3-theme" style="padding:64px 32px">
+  <h1 class="w3-xxxlarge">Titre du module</h1>
+</header>
 
-        <!-- L'écart type -->
-        <h3>4. L'écart type</h3>
-        <p>
-            L'<strong>écart type</strong> (noté $\sigma$ pour une population ou $s$ pour un échantillon) mesure l'écart moyen entre chaque donnée et la moyenne de la série.
-        </p>
-        <p>
-            Plus l'écart type est faible, plus les données sont regroupées autour de la moyenne (série homogène). Plus il est élevé, plus les données sont étalées (série hétérogène).
-        </p>
-    </div>
+<div class="w3-container" style="padding:32px">
 
-    <!-- SECTION : Comment calculer l'écart type -->
-    <div class="section-card">
-        <h2>Comment calculer l'écart type ($\sigma$) ?</h2>
-        <p>
-            Le calcul de l'écart type se fait en 5 étapes successives :
-        </p>
+<!-- Tu peux complètement modifier le contenu ci-dessous -->
 
-        <ol>
-            <li>
-                <strong>Calculer la moyenne ($\bar{x}$)</strong> de l'ensemble des données.
-            </li>
-            <li>
-                <strong>Calculer les écarts à la moyenne :</strong> Soustraire la moyenne de chaque valeur $(x_i - \bar{x})$.
-            </li>
-            <li>
-                <strong>Elever ces écarts au carré :</strong> $(x_i - \bar{x})^2$ (ceci élimine les signes négatifs).
-            </li>
-            <li>
-                <strong>Calculer la variance :</strong> Faire la moyenne de ces carrés d'écarts (somme des carrés divisée par le nombre total de valeurs $N$).
-            </li>
-            <li>
-                <strong>Prendre la racine carrée :</strong> La racine carrée de la variance donne l'écart type.
-            </li>
-        </ol>
+<h1>Les mesures de dispersion</h1>
+Les mesures de dispersion sont utilisées en statistique pour évaluer l'étalement, la variabilité ou la diversité des valeurs d'une série donnée autour d'une valeur centrale (comme la moyenne ou la médiane).
+<h2>Les Methodes de mesure de dispersion</h2>
+<h3>L'etendue</h3>
+L'étendue est la mesure de dispersion la plus simple à calculer. Elle correspond à la différence entre la valeur maximale et la valeur minimale d'une série statistique.
+<h4>Les Quartiles</h4>
+ Les quartiles sont les trois valeurs ($Q_1$, $Q_2$ et $Q_3$) qui divisent une série statistique ordonnée (du plus petit au plus grand) en quatre parties égales, contenant chacune 25 % des données.
+<h5>L'ecart interquartile</h5>
+ L'écart interquartile (souvent noté $IQR$) est la différence entre le troisième quartile et le premier quartile.
+<h6>L'ecart type</h6>
+L'écart type (noté $\sigma$ pour une population) est la mesure de dispersion la plus puissante et la plus utilisée en statistique. Il indique l'écart moyen entre les différentes valeurs de la série et la moyenne de cette même série.
+<h7>Comment calculer l'écart type?</h7>
+1. Calculer la moyenne** de la série de données.
+2. Trouver l'écart** de chaque valeur par rapport à cette moyenne (en soustrayant la moyenne de chaque valeur).
+3. Mettre chaque écart au carré pour enlever les nombres négatifs.
+4. Calculer la variance** en faisant la moyenne de tous ces carrés (additionne les carrés et divise par le nombre total de valeurs).
+5. Prendre la racine carrée** de la variance : le résultat final est l'écart-type!
+<h8>Lecon</h8>
+<a href="https://docs.google.com/presentation/d/1tXPZIZGQORBiqncTZE7DXeNAXTLYVB5rUZZRTPkWiaU/edit?usp=sharing" target="_blank">Ouvrir la présentation Google Slides</a>
+<h9>exercise</h9>
+<a href="https://docs.google.com/document/d/1iijMP3yIK5ZFTPgOxhGuEC0AtNzfa1ME/edit?usp=sharing&ouid=100760274884507780868&rtpof=true&sd=true" target="_blank">Ouvrir le document Google Docs</a>
+<h10>Source</h10>
+<a href="https://www.alloprof.qc.ca/fr/eleves/bv/mathematiques/les-mesures-de-dispersion-m1373" target="_blank">Ouvrir la fiche AlloProf sur les mesures de dispersion</a>
+<!-- Tu peux complètement modifier le contenu par dessus cette ligne -->
 
-        <div class="formula-box">
-            Moyenne : x̄ = (∑ xᵢ) / N <br>
-            Variance : σ² = ∑ (xᵢ - x̄)² / N <br>
-            Écart type : σ = √(Variance)
-        </div>
+</div>
 
-        <h3>Exemple pratique de calcul :</h3>
-        <p>Prenons la série de données : <strong>5, 5, 5, 5, 5, 5, 6, 7</strong> (Total $N = 8$).</p>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Valeur ($x_i$)</th>
-                    <th>Écart à la moyenne ($x_i - \bar{x}$)</th>
-                    <th>Carré de l'écart $(x_i - \bar{x})^2$</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>5</td><td>5 - 5,5 = -0,5</td><td>0,25</td></tr>
-                <tr><td>6</td><td>6 - 5,5 = +0,5</td><td>0,25</td></tr>
-                <tr><td>7</td><td>7 - 5,5 = +1,5</td><td>2,25</td></tr>
-            </tbody>
-        </table>
+<footer class="w3-container w3-theme" style="padding:32px">
+  <p>Contenu de cette page web par M. Gore (prénom: Pytha)</p>
+</footer>
+     
+</div>
 
-        <ul>
-            <li><strong>Moyenne :</strong> $\bar{x} = 44 / 8 = 5,5$</li>
-            <li><strong>Somme des carrés :</strong> $0,25 \times 7 + 2,25 = 4,00$</li>
-            <li><strong>Variance ($\sigma^2$) :</strong> $4,00 / 8 = 0,50$</li>
-            <li><strong>Écart type ($\sigma$) :</strong> $\sqrt{0,50} \approx \mathbf{0,707}$</li>
-        </ul>
-    </div>
+<script>
+// Open and close the sidebar on medium and small screens
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Change style of top container on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    document.getElementById("myTop").classList.add("w3-card-4", "w3-animate-opacity");
+    document.getElementById("myIntro").classList.add("w3-show-inline-block");
+  } else {
+    document.getElementById("myIntro").classList.remove("w3-show-inline-block");
+    document.getElementById("myTop").classList.remove("w3-card-4", "w3-animate-opacity");
+  }
+}
+
+</script>
+     
 </body>
-</html>
+</html> 
